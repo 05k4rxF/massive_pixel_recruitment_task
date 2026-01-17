@@ -1,4 +1,4 @@
-# Flutter Product App - Recruitment Taks
+# Flutter Product App - Recruitment Task
 
 A Flutter web application that fetches and displays products from the FakeStore API, built with Clean Architecture principles and SOLID design patterns.
 
@@ -24,15 +24,19 @@ A Flutter web application that fetches and displays products from the FakeStore 
 1. Clone the repository
 
 2. Install dependencies:
-   ``` bash
+   ```bash
    flutter pub get
    ```
 
-3. Run the application:
-   ``` bash
-   flutter run -d chrome
+3. Generate code (Freezed classes):
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
    ```
 
+4. Run the application:
+   ```bash
+   flutter run -d chrome
+   ```
 
 ## Architecture
 
@@ -66,9 +70,11 @@ lib/
 - **Widgets**: Reusable UI components
 
 #### 4. Core Layer
-- **Constants**: API endpoints and configuration
+- **Constants**: API endpoints and app configuration
 - **Error Handling**: Exceptions and failures
-- **Network**: HTTP client wrapper
+- **Network**: HTTP client wrapper with timeout handling
+- **Extensions**: Utility extensions (e.g., BoxConstraints for responsive design)
+- **Injection**: Dependency injection container (GetIt)
 
 ### Data Flow
 
@@ -112,10 +118,15 @@ The application uses **BLoC (Business Logic Component)** pattern for state manag
 lib/
 ├── core/
 │   ├── constants/
-│   │   └── api_constants.dart
+│   │   ├── api_constants.dart
+│   │   └── app_constants.dart
 │   ├── error/
 │   │   ├── exceptions.dart
 │   │   └── failures.dart
+│   ├── extensions/
+│   │   └── box_constraints_extensions.dart
+│   ├── injection/
+│   │   └── injection_container.dart
 │   └── network/
 │       └── api_client.dart
 ├── data/
@@ -150,11 +161,19 @@ lib/
 
 ## Dependencies
 
+### Main Dependencies
 - `bloc`: ^8.1.3 - State management
 - `flutter_bloc`: ^8.1.5 - BLoC integration with Flutter
 - `http`: ^1.2.0 - HTTP requests
-- `equatable`: ^2.0.5 - Value equality
 - `dartz`: ^0.10.1 - Functional programming (Either type)
+- `get_it`: ^9.2.0 - Dependency injection
+- `freezed_annotation`: ^3.1.0 - Code generation annotations for Freezed
+- `json_annotation`: ^4.9.0 - JSON serialization annotations
+
+### Dev Dependencies
+- `build_runner`: ^2.4.13 - Code generation tool
+- `freezed`: ^3.2.4 - Code generation for immutable classes and unions
+- `json_serializable`: ^6.8.0 - JSON serialization code generation
 
 ## API
 
